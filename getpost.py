@@ -6,7 +6,7 @@ from datetime import datetime
 query = '''
 query ($id: Int, $post_count: Int) {
   Page(page: 1, perPage: $post_count) {
-    activities(userId: $id, sort: ID_DESC) {
+    activities(userId: $id, sort: ID_DESC, type: TEXT) {
       ... on TextActivity {
         type
         id
@@ -47,19 +47,19 @@ while(True):
     contents = data['data']['Page']['activities'][0]['text']
     id = data['data']['Page']['activities'][0]['id']
 
-    print(name + " Posted at " + date)
-    print(contents)
-    print(f"ID: {id}")
-    print("==========================")
+    # print(f"{name} posted at {date}")
+    # print(contents)
+    # print(f"ID: {id}")
+    # print("==========================")
 
     f = open("msg.dat", "r")
     msg = f.read()
     if str(msg) == str(id):
-        print("Message already read")
+        print(f"Message already read: {id}")
     else:
         f = open("msg.dat", "w")
         f.write(str(id))
         f.close()
-        print("New message!")
-        
+        print(f"New message: {id}")
+
     time.sleep(30)
